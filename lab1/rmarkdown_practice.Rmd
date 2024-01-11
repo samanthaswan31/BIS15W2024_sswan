@@ -15,6 +15,11 @@ Practice: ## denotes a title, more #s leads to smaller text, must be a space bet
 ### Title
 #### Title
 
+Line breaks: add two spaces at the end of the new line
+
+I am testing, testing 
+I am.  
+
 Using links, [____] is what it titles it, add link after
 
 ## Links
