@@ -1,0 +1,56 @@
+---
+title: "RMarkdown Practice"
+author: "Samantha Swan"
+date: "2024-01-11"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Practice: ## denotes a title, more #s leads to smaller text, must be a space between last text and the # Title, must be space between title name and #, adding a # in front of code will make it not run
+
+## Title
+### Title
+#### Title
+
+Using links, [____] is what it titles it, add link after
+
+## Links
+
+[BIS 15L Webpage](https://jmledford3115.github.io/datascibiol/)
+
+## Practice
+1. Test out arithmatic capabilities
+```{r}
+1+8
+300000000/8375
+17*6/2
+```
+
+2. Experiment with titles and syntax, # number directly corresponds to size without regards to order
+
+## HAPPY THURSDAY
+#### Test
+### Test 2
+
+3. Copy paste
+```{r}
+#install.packages("tidyverse")
+library("tidyverse")
+```
+
+
+```{r}
+ggplot(mtcars, aes(x = factor(cyl))) +
+    geom_bar()
+```
+
+```{r}
+ggplot(mtcars, aes(x = factor(cyl))) +
+    geom_bar()
+```
+
+4. Now `knit` the file to html using the knit button at the top of the page.  
+5. Lastly, commit and push this file to your GitHub repository.  
