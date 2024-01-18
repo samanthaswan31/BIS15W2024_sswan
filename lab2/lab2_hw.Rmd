@@ -66,18 +66,35 @@ spring_matrix
 ```
 
 6. Calculate the mean temperature of all eight springs.
-
+```{r}
+mean_temperature <- rowMeans(spring_matrix)
+```
 
 7. Add this as a new column in the data matrix.  
-
+```{r}
+final_spring_matrix <- cbind(spring_matrix, mean_temperature)
+final_spring_matrix
+```
 
 8. Show Susan's value for Opal Spring only.
-
+```{r}
+final_spring_matrix[2,3]
+```
 
 9. Calculate the mean for Jill's column only.  
-
+```{r}
+Jill_is_mean <- final_spring_matrix[ ,1]
+mean(Jill_is_mean)
+```
 
 10. Use the data matrix to perform one calculation or operation of your interest.
+```{r}
+mean1 <- final_spring_matrix[ ,1]
+mean2 <- final_spring_matrix[ ,2]
+mean3 <- final_spring_matrix[ ,3]
+mean(mean1+mean2+mean3)
+```
+
 
 ## Push your final code to GitHub!
 Please be sure that you check the `keep md` file in the knit preferences.  
