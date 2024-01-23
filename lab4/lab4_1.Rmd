@@ -30,10 +30,9 @@ fish <- readr::read_csv("data/Gaeta_etal_CLC_data.csv")
 
 ## Data Structure
 Once data have been uploaded, let's get an idea of its structure, contents, and dimensions.  
+Can use glimpse, summary
 ```{r}
-structure(fish)
 glimpse(fish)
-dim(fish)
 ```
 
 ## Tidyverse
@@ -50,8 +49,18 @@ names(fish)
 ```
 
 We are only interested in lakeid and scalelength.
+
+Fish not in quotes as it is an object, "" required for variables
 ```{r}
 select(fish, "lakeid", "scalelength")
+```
+```{r}
+names(fish)
+```
+
+Order of product is related to the order in which the variables are added
+```{r}
+fihs_subset <- select(fish, "fish_id", "length")
 ```
 
 To add a range of columns use `start_col:end_col`.
@@ -61,7 +70,7 @@ select(fish, fish_id:length)
 
 The - operator is useful in select. It allows us to select everything except the specified variables.
 ```{r}
-select(fish, -fish_id, -annnumber, -length, -radii_length_mm)
+select(fish, -"fish_id", -"annnumber", -"length", -"radii_length_mm")
 ```
 
 For very large data frames with lots of variables, `select()` utilizes lots of different operators to make things easier. Let's say we are only interested in the variables that deal with length.
@@ -99,16 +108,16 @@ select(fish, contains("fish"))
 
 We won't cover regular expressions [regex](https://en.wikipedia.org/wiki/Regular_expression) in this class, but the following code is helpful when you know that a column contains a letter (in this case "a") followed by a subsequent string (in this case "er").  
 ```{r}
-select(fish, matches("a.+er"))
+select(fish, matches("a.+er")) #handy bit of code for the project
 ```
 
 You can also select columns based on the class of data.  
 ```{r}
 glimpse(fish)
 ```
-
+OR select_if(fish, is.numeric()) for is numeric, ! means is not
 ```{r}
-select_if(fish, is.numeric)
+select_if(fish, ~!is.numeric(.))
 ```
 
 To select all columns that are *not* a class of data, you need to add a `~`.
@@ -122,67 +131,89 @@ For this exercise we will use life history data `mammal_lifehistories_v2.csv` fo
 
 Load the data.  
 ```{r}
+getwd()
+```
 
+```{r}
+mammals <- read_csv("data/mammal_lifehistories_v2.csv")
 ```
 
 1. Use one or more of your favorite functions to assess the structure of the data.  
 ```{r}
-
+glimpse(mammals)
 ```
 
-2. Are there any NAs? Are you sure? Try taking an average of `max. life` as a test.  
+2. Are there any NAs? Are you sure? Try taking an average of `max. life` as a test. 
+
+No there are no NAs
 ```{r}
-
-```
-
-```{r}
-
+anyNA(mammals)
 ```
 
 ```{r}
-
+summary(mammals)
+```
+Wean mass minimum is -999 which is incorrect
+```{r}
+class(mammals$`max. life`)
 ```
 
 3. What are the names of the columns in the `mammals` data?
 ```{r}
-
+names(mammals)
 ```
 
 4. Rename any columns that have capitol letters or punctuation issues.  
 ```{r}
-
+mammals_new <- rename(mammals, genus = "Genus", wean_mass = "wean mass", max_life = "max. life", litters_year = "litters/year", litter_size = "litter size")
 ```
 
 5. We are only interested in the variables `genus`, `species`, and `mass`. Use `select()` to build a new dataframe `mass` focused on these variables.
 ```{r}
-
-```
-
-```{r}
-
+mass <- select(mammals_new, "genus", "species", "mass")
+mass
 ```
 
 6. What if we only wanted to exclude `order` and `family`? Use the `-` operator to make the code efficient.
 ```{r}
-
+mammals_excluded <- select(mammals_new, -"order", -"family")
 ```
 
 7. Select the columns that include "mass" as part of the name.  
 ```{r}
-
+mammals_mass <- select(mammals_new, contains("mass"))
+mammals_mass
 ```
 
-8. Select all of the columns that are of class `character`.  
+8. Select all of the columns that are of class `character`. 
+
+My way:
 ```{r}
-
+mammals_new %>% 
+select(where(is.character))
 ```
+
+Class way: 
+```{r}
+select_if(mammals_new, ~is.character(.))
+```
+
 
 ## Other
 Here are two examples of code that are super helpful to have in your bag of tricks.  
 
 Imported data frames often have a mix of lower and uppercase column names. Use `toupper()` or `tolower()` to fix this issue. I always try to use lowercase to keep things consistent.  
 ```{r}
+select_all(mammals, tolower)
+```
 
+```{r}
+library(janitor)
+names(mammals)
+```
+
+```{r}
+clean_names(mammals)
 ```
 
 When naming columns, blank spaces are often added (don't do this, please). Here is a trick to remove these.  
