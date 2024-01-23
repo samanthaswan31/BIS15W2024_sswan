@@ -1,0 +1,55 @@
+---
+title: "lab_4_warmup"
+output: html_document
+date: "2024-01-23"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Warm-up
+1. In a new R Markdown document, load the tidyverse and a package called `palmerpenguins`.
+```{r}
+library("tidyverse")
+library("palmerpenguins")
+```
+
+2. What are the dimensions of the dataset `penguins`?
+
+Dimensions are 344 by 8
+```{r}
+dim(penguins)
+```
+
+3. What are the names of the variables in the `penguins` dataset?
+
+The names are species, island, bill length, bill depth, flipper length, body mass, sex, year
+```{r}
+glimpse(penguins)
+```
+Method done in class -> variables are columns so do names(penguins)
+
+4. How many individuals were sampled on each island in the `penguins` dataset?
+
+165 females, 168 males, 11 NAs so 344 total individual's matching the 344 rows
+```{r}
+summary(penguins)
+```
+Class method
+```{r}
+table(penguins$island)
+```
+OR
+```{r}
+summary(penguins$island)
+```
+
+
+5. What is the mean body mass for all individuals in the `penguins` dataset?
+
+4201.754 grams
+```{r}
+mean(penguins$body_mass_g, na.rm=T)
+```
+
