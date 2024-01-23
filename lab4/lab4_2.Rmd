@@ -68,6 +68,7 @@ filter(fish, between(scalelength, 2.5, 2.55))
 ```
 
 You can also extract observations "near" a certain value but you need to specify a tolerance.  
+tolerance establishes an endpoint
 ```{r}
 filter(fish, near(radii_length_mm, 2, tol = 0.2))
 ```

@@ -59,6 +59,7 @@ Data: http://datadryad.org/resource/doi:10.5061/dryad.q5j65/1
 
 ```
 
+STOP HERE (1/23/24)
 **7. Make two new data frames, one which is restricted to carnivores and another that is restricted to herbivores.**  
 ```{r}
 
