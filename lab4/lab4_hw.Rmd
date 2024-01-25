@@ -132,10 +132,15 @@ owls <- filter(homerange, order == "strigiformes")
 owls
 ```
 Smallest owl
-Mean mass of 61.32 grams
+Mean mass of 61.32 grams, is the Eurasian pygmy owl
 ```{r}
-min(owls$mean.mass.g)
+min(owls$mean.mass.g) 
 ```
+
+```{r}
+filter(owls, mean.mass.g == 61.32)
+```
+ 
  
  Try filtering
 **10. As measured by the data, which bird species has the largest homerange? Show all of your work, please. Look this species up online and tell me about it!**.  

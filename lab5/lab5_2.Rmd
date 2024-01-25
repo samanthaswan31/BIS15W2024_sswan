@@ -56,8 +56,8 @@ filter(fish, lakeid == "AL")
 ```
 
 ```{r}
-fish %>%
-  select(lakeid, scalelength) %>%
+fish %>% 
+  select(lakeid, scalelength) %>% 
   filter(lakeid == "AL")
 ```
 
@@ -71,8 +71,18 @@ mammals %>%
 ## Practice
 1. We are interested in the fish from the lakes "AL" and "AR" with a radii length between 2 and 4. Extract this information from the `fish` data. Use pipes!  
 ```{r}
-
+names(fish)
 ```
+
+Class method
+```{r}
+fish %>% # work with the fish data
+  select(lakeid, radii_length_mm) %>% #pull out variables of interest
+  filter(lakeid=="AL" | lakeid=="AR") %>%  # only these lakes
+  filter(between(radii_length_mm, 2, 4)) %>% #between 2 and 4
+  arrange(desc(radii_length_mm)) #sort to make easier to read
+```
+
 
 ## `arrange()`
 The `arrange()` command is a bit like a sort command in excel. Note that the default is ascending order.  
@@ -100,7 +110,10 @@ fish %>%
 ## Practice
 1. We are interested in the radii length and scalelength of fish with the id `300`. Extract this information from the `fish` data. Please sort the data by radii length.
 ```{r}
-
+fish %>% 
+  select(radii_length_mm, scalelength, fish_id) %>% 
+  filter(fish_id == 300)
+  arrange(radii_length_mm)
 ```
 
 ## `mutate()`  
