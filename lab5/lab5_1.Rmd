@@ -18,6 +18,7 @@ output:
 ## Load the tidyverse
 ```{r message=FALSE, warning=FALSE}
 library("tidyverse")
+library("janitor")
 ```
 
 ## Load the data
@@ -40,7 +41,8 @@ mammals <- rename(mammals, genus="Genus", wean_mass="wean mass", max_life= "max.
 
 Do you remember the easier way?
 ```{r}
-
+mammals <- clean_names(mammals)
+names(mammals)
 ```
 
 ## Review
@@ -57,15 +59,18 @@ levels(fish$lakeid)
 
 Now we can pull out any state of interest.  
 ```{r}
-
+filter(fish, lakeid == "LJ")
 ```
 
 ## Using `filter()` on multiple conditions
 You can also use `filter()` to extract data based on multiple conditions. Below we extract only the fish that have lakeid "AL" and length >350.
+
+AND
 ```{r}
 filter(fish, lakeid == "AL" & length > 350)
 ```
 
+OR
 Notice that the `|` operator generates a different result.
 ```{r}
 filter(fish, lakeid == "AL" | length > 350)
@@ -84,15 +89,30 @@ filter(fish, length > 400, (scalelength > 11 | radii_length_mm > 8))
 
 ## Practice  
 1.  From the `mammals` data, filter all members of the family Bovidae with a mass greater than 450000.
-```{r}
 
+```{r}
+names(mammals)
+```
+
+
+```{r}
+bovidae <- filter(mammals, family == "Bovidae" & mass > 450000)
+bovidae
 ```
 
 2. From the `mammals` data, build a data frame that compares `mass`, `gestation`, and `newborn` among the primate genera `Lophocebus`, `Erythrocebus`, and `Macaca`. Among these genera, which species has the smallest `newborn` mass?
-```{r}
 
+Class strategy1: inefficient nesting
+```{r}
+mammals2 <- select(mammals, "order", "genus", "mass", "gestation", "newborn")
+mammals3 <- filter(mammals, order=="Primates")
 ```
 
+```{r}
+mammals4 <- filter(mammals3, genus %in% c("Lophocebus", "Erythrocebus", "Macaca"))
+```
+
+Class strategy2: better
 ```{r}
 
 ```
