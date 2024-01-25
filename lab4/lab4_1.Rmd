@@ -54,6 +54,7 @@ Fish not in quotes as it is an object, "" required for variables
 ```{r}
 select(fish, "lakeid", "scalelength")
 ```
+
 ```{r}
 names(fish)
 ```
