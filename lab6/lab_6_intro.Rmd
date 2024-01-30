@@ -1,0 +1,84 @@
+---
+title: "Lab 6 Intro"
+date: "`r Sys.Date()`"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library("jpeg")
+library("tidyverse")
+```
+
+## Setup
+1. Go to iclicker.com and record your attendance.
+2. Login to the lab computer (please don't use your personal computer).  
+3. Navigate to github.com and login.  
+4. Find the class repository "datascibiol" (https://github.com/jmledford3115/datascibiol).  
+5. Download a copy the class repository to the desktop.  
+6. Clone your repository to the desktop.  
+7. Copy the files for today's lab from the class repository and paste them into **your** repository.  
+8. Open today's lab in RStudio.  
+
+## Review from last time
+### *With a partner, discuss the following questions*
+1. What are the characteristics of `tidy` data?  
+2. What is the difference between `select` and `filter`?  
+3. When is your first midterm?  
+
+## Warm-up
+1. Load the `bison.csv` data.
+
+```{r}
+bison <- read.csv("data/bison.csv")
+```
+
+2. What are the dimesions and structure of the data?
+```{r}
+dim(bison)
+glimpse(bison)
+```
+
+3. We are only interested in code, sex, weight, year of birth. Restrict the data to these variables and store the dataframe as a new object.
+```{r}
+bison_restricted <- select(bison, "data_code", "animal_sex", "animal_weight", "animal_yob")
+```
+
+4. Pull out the animals born between 1980-1990.
+```{r}
+filter(bison_restricted, between(animal_yob, 1980, 1990))
+```
+
+5. How many male and female bison are represented between 1980-1990?
+
+435 bison total
+```{r} 
+bison_number <- filter(bison_restricted, between(animal_yob, 1980, 1990))
+glimpse(bison_number)
+```
+
+414 Females
+```{r}
+bison_female <- filter(bison_number, animal_sex == "F")
+bison_female
+```
+
+21 Males
+```{r}
+bison_male <- filter(bison_number, animal_sex == "M")
+bison_male
+```
+
+6. Between 1980-1990, were males or females larger on average?
+Males
+
+Males are 1543.33
+```{r}
+mean(bison_male$animal_weight)
+```
+
+Females are 1017.314
+```{r}
+mean(bison_female$animal_weight)
+```
+
