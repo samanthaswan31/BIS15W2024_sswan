@@ -11,7 +11,7 @@
 
 <meta name="author" content="Samantha Swan" />
 
-<meta name="date" content="2024-01-25" />
+<meta name="date" content="2024-01-29" />
 
 <title>Lab 4 Homework</title>
 
@@ -376,7 +376,7 @@ display: none;
 
 <h1 class="title toc-ignore">Lab 4 Homework</h1>
 <h4 class="author">Samantha Swan</h4>
-<h4 class="date">2024-01-25</h4>
+<h4 class="date">2024-01-29</h4>
 
 </div>
 
@@ -2296,16 +2296,182 @@ guild.</strong></p>
 <p>STOP HERE (1/23/24) <strong>7. Make two new data frames, one which is
 restricted to carnivores and another that is restricted to
 herbivores.</strong></p>
+<pre class="r"><code>names(homerange)</code></pre>
+<pre><code>##  [1] &quot;taxon&quot;                      &quot;common.name&quot;               
+##  [3] &quot;class&quot;                      &quot;order&quot;                     
+##  [5] &quot;family&quot;                     &quot;genus&quot;                     
+##  [7] &quot;species&quot;                    &quot;primarymethod&quot;             
+##  [9] &quot;N&quot;                          &quot;mean.mass.g&quot;               
+## [11] &quot;log10.mass&quot;                 &quot;alternative.mass.reference&quot;
+## [13] &quot;mean.hra.m2&quot;                &quot;log10.hra&quot;                 
+## [15] &quot;hra.reference&quot;              &quot;realm&quot;                     
+## [17] &quot;thermoregulation&quot;           &quot;locomotion&quot;                
+## [19] &quot;trophic.guild&quot;              &quot;dimension&quot;                 
+## [21] &quot;preymass&quot;                   &quot;log10.preymass&quot;            
+## [23] &quot;PPMR&quot;                       &quot;prey.size.reference&quot;</code></pre>
+<pre class="r"><code>glimpse(homerange)</code></pre>
+<pre><code>## Rows: 569
+## Columns: 24</code></pre>
+<pre><code>## Warning in grepl(&quot;,&quot;, levels(x), fixed = TRUE): input string 50 is invalid
+## UTF-8</code></pre>
+<pre><code>## $ taxon                      &lt;fct&gt; lake fishes, river fishes, river fishes, ri…
+## $ common.name                &lt;chr&gt; &quot;american eel&quot;, &quot;blacktail redhorse&quot;, &quot;cent…
+## $ class                      &lt;chr&gt; &quot;actinopterygii&quot;, &quot;actinopterygii&quot;, &quot;actino…
+## $ order                      &lt;fct&gt; anguilliformes, cypriniformes, cypriniforme…
+## $ family                     &lt;chr&gt; &quot;anguillidae&quot;, &quot;catostomidae&quot;, &quot;cyprinidae&quot;…
+## $ genus                      &lt;chr&gt; &quot;anguilla&quot;, &quot;moxostoma&quot;, &quot;campostoma&quot;, &quot;cli…
+## $ species                    &lt;chr&gt; &quot;rostrata&quot;, &quot;poecilura&quot;, &quot;anomalum&quot;, &quot;fundu…
+## $ primarymethod              &lt;chr&gt; &quot;telemetry&quot;, &quot;mark-recapture&quot;, &quot;mark-recapt…
+## $ N                          &lt;chr&gt; &quot;16&quot;, NA, &quot;20&quot;, &quot;26&quot;, &quot;17&quot;, &quot;5&quot;, &quot;2&quot;, &quot;2&quot;, …
+## $ mean.mass.g                &lt;dbl&gt; 887.00, 562.00, 34.00, 4.00, 4.00, 3525.00,…
+## $ log10.mass                 &lt;dbl&gt; 2.9479236, 2.7497363, 1.5314789, 0.6020600,…
+## $ alternative.mass.reference &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+## $ mean.hra.m2                &lt;dbl&gt; 282750.00, 282.10, 116.11, 125.50, 87.10, 3…
+## $ log10.hra                  &lt;dbl&gt; 5.4514026, 2.4504031, 2.0648696, 2.0986437,…
+## $ hra.reference              &lt;chr&gt; &quot;Minns, C. K. 1995. Allometry of home range…
+## $ realm                      &lt;chr&gt; &quot;aquatic&quot;, &quot;aquatic&quot;, &quot;aquatic&quot;, &quot;aquatic&quot;,…
+## $ thermoregulation           &lt;chr&gt; &quot;ectotherm&quot;, &quot;ectotherm&quot;, &quot;ectotherm&quot;, &quot;ect…
+## $ locomotion                 &lt;chr&gt; &quot;swimming&quot;, &quot;swimming&quot;, &quot;swimming&quot;, &quot;swimmi…
+## $ trophic.guild              &lt;chr&gt; &quot;carnivore&quot;, &quot;carnivore&quot;, &quot;carnivore&quot;, &quot;car…
+## $ dimension                  &lt;dbl&gt; 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3…
+## $ preymass                   &lt;dbl&gt; NA, NA, NA, NA, NA, NA, 1.39, NA, NA, NA, N…
+## $ log10.preymass             &lt;dbl&gt; NA, NA, NA, NA, NA, NA, 0.1430148, NA, NA, …
+## $ PPMR                       &lt;dbl&gt; NA, NA, NA, NA, NA, NA, 530, NA, NA, NA, NA…
+## $ prey.size.reference        &lt;chr&gt; NA, NA, NA, NA, NA, NA, &quot;Brose U, et al. 20…</code></pre>
+<pre class="r"><code>carnivores &lt;- filter(homerange, trophic.guild == &quot;carnivore&quot;)
+herbivores &lt;- filter(homerange, trophic.guild == &quot;herbivore&quot;)
+carnivores</code></pre>
+<pre><code>## # A tibble: 342 × 24
+##    taxon        common.name class order family genus species primarymethod N    
+##    &lt;fct&gt;        &lt;chr&gt;       &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;
+##  1 lake fishes  american e… acti… angu… angui… angu… rostra… telemetry     16   
+##  2 river fishes blacktail … acti… cypr… catos… moxo… poecil… mark-recaptu… &lt;NA&gt; 
+##  3 river fishes central st… acti… cypr… cypri… camp… anomal… mark-recaptu… 20   
+##  4 river fishes rosyside d… acti… cypr… cypri… clin… fundul… mark-recaptu… 26   
+##  5 river fishes longnose d… acti… cypr… cypri… rhin… catara… mark-recaptu… 17   
+##  6 river fishes muskellunge acti… esoc… esoci… esox  masqui… telemetry     5    
+##  7 marine fish… pollack     acti… gadi… gadid… poll… pollac… telemetry     2    
+##  8 marine fish… saithe      acti… gadi… gadid… poll… virens  telemetry     2    
+##  9 marine fish… giant trev… acti… perc… caran… cara… ignobi… telemetry     4    
+## 10 lake fishes  rock bass   acti… perc… centr… ambl… rupest… mark-recaptu… 16   
+## # ℹ 332 more rows
+## # ℹ 15 more variables: mean.mass.g &lt;dbl&gt;, log10.mass &lt;dbl&gt;,
+## #   alternative.mass.reference &lt;chr&gt;, mean.hra.m2 &lt;dbl&gt;, log10.hra &lt;dbl&gt;,
+## #   hra.reference &lt;chr&gt;, realm &lt;chr&gt;, thermoregulation &lt;chr&gt;, locomotion &lt;chr&gt;,
+## #   trophic.guild &lt;chr&gt;, dimension &lt;dbl&gt;, preymass &lt;dbl&gt;, log10.preymass &lt;dbl&gt;,
+## #   PPMR &lt;dbl&gt;, prey.size.reference &lt;chr&gt;</code></pre>
+<pre class="r"><code>herbivores</code></pre>
+<pre><code>## # A tibble: 227 × 24
+##    taxon        common.name class order family genus species primarymethod N    
+##    &lt;fct&gt;        &lt;chr&gt;       &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;
+##  1 marine fish… lined surg… acti… perc… acant… acan… lineat… direct obser… &lt;NA&gt; 
+##  2 marine fish… orangespin… acti… perc… acant… naso  litura… telemetry     8    
+##  3 marine fish… bluespine … acti… perc… acant… naso  unicor… telemetry     7    
+##  4 marine fish… redlip ble… acti… perc… blenn… ophi… atlant… direct obser… 20   
+##  5 marine fish… bermuda ch… acti… perc… kypho… kyph… sectat… telemetry     11   
+##  6 marine fish… cherubfish  acti… perc… pomac… cent… argi    direct obser… &lt;NA&gt; 
+##  7 marine fish… damselfish  acti… perc… pomac… chro… chromis direct obser… &lt;NA&gt; 
+##  8 marine fish… twinspot d… acti… perc… pomac… chry… biocel… direct obser… 18   
+##  9 marine fish… wards dams… acti… perc… pomac… poma… wardi   direct obser… &lt;NA&gt; 
+## 10 marine fish… australian… acti… perc… pomac… steg… apical… direct obser… &lt;NA&gt; 
+## # ℹ 217 more rows
+## # ℹ 15 more variables: mean.mass.g &lt;dbl&gt;, log10.mass &lt;dbl&gt;,
+## #   alternative.mass.reference &lt;chr&gt;, mean.hra.m2 &lt;dbl&gt;, log10.hra &lt;dbl&gt;,
+## #   hra.reference &lt;chr&gt;, realm &lt;chr&gt;, thermoregulation &lt;chr&gt;, locomotion &lt;chr&gt;,
+## #   trophic.guild &lt;chr&gt;, dimension &lt;dbl&gt;, preymass &lt;dbl&gt;, log10.preymass &lt;dbl&gt;,
+## #   PPMR &lt;dbl&gt;, prey.size.reference &lt;chr&gt;</code></pre>
 <p><strong>8. Do herbivores or carnivores have, on average, a larger
 <code>mean.hra.m2</code>? Remove any NAs from the data.</strong></p>
+<p>Herbivores</p>
+<pre class="r"><code>mean(herbivores$mean.hra.m2, na.rm = T)</code></pre>
+<pre><code>## [1] 34137012</code></pre>
+<pre class="r"><code>mean(carnivores$mean.hra.m2, na.rm = T)</code></pre>
+<pre><code>## [1] 13039918</code></pre>
 <p><strong>9. Make a new dataframe <code>owls</code> that is limited to
 the mean mass, log10 mass, family, genus, and species of owls in the
 database. Which is the smallest owl? What is its common name? Do a
 little bit of searching online to see what you can learn about this
 species and provide a link below</strong></p>
-<p><strong>10. As measured by the data, which bird species has the
-largest homerange? Show all of your work, please. Look this species up
-online and tell me about it!</strong>.</p>
+<pre class="r"><code>glimpse(homerange)</code></pre>
+<pre><code>## Rows: 569
+## Columns: 24</code></pre>
+<pre><code>## Warning in grepl(&quot;,&quot;, levels(x), fixed = TRUE): input string 50 is invalid
+## UTF-8</code></pre>
+<pre><code>## $ taxon                      &lt;fct&gt; lake fishes, river fishes, river fishes, ri…
+## $ common.name                &lt;chr&gt; &quot;american eel&quot;, &quot;blacktail redhorse&quot;, &quot;cent…
+## $ class                      &lt;chr&gt; &quot;actinopterygii&quot;, &quot;actinopterygii&quot;, &quot;actino…
+## $ order                      &lt;fct&gt; anguilliformes, cypriniformes, cypriniforme…
+## $ family                     &lt;chr&gt; &quot;anguillidae&quot;, &quot;catostomidae&quot;, &quot;cyprinidae&quot;…
+## $ genus                      &lt;chr&gt; &quot;anguilla&quot;, &quot;moxostoma&quot;, &quot;campostoma&quot;, &quot;cli…
+## $ species                    &lt;chr&gt; &quot;rostrata&quot;, &quot;poecilura&quot;, &quot;anomalum&quot;, &quot;fundu…
+## $ primarymethod              &lt;chr&gt; &quot;telemetry&quot;, &quot;mark-recapture&quot;, &quot;mark-recapt…
+## $ N                          &lt;chr&gt; &quot;16&quot;, NA, &quot;20&quot;, &quot;26&quot;, &quot;17&quot;, &quot;5&quot;, &quot;2&quot;, &quot;2&quot;, …
+## $ mean.mass.g                &lt;dbl&gt; 887.00, 562.00, 34.00, 4.00, 4.00, 3525.00,…
+## $ log10.mass                 &lt;dbl&gt; 2.9479236, 2.7497363, 1.5314789, 0.6020600,…
+## $ alternative.mass.reference &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+## $ mean.hra.m2                &lt;dbl&gt; 282750.00, 282.10, 116.11, 125.50, 87.10, 3…
+## $ log10.hra                  &lt;dbl&gt; 5.4514026, 2.4504031, 2.0648696, 2.0986437,…
+## $ hra.reference              &lt;chr&gt; &quot;Minns, C. K. 1995. Allometry of home range…
+## $ realm                      &lt;chr&gt; &quot;aquatic&quot;, &quot;aquatic&quot;, &quot;aquatic&quot;, &quot;aquatic&quot;,…
+## $ thermoregulation           &lt;chr&gt; &quot;ectotherm&quot;, &quot;ectotherm&quot;, &quot;ectotherm&quot;, &quot;ect…
+## $ locomotion                 &lt;chr&gt; &quot;swimming&quot;, &quot;swimming&quot;, &quot;swimming&quot;, &quot;swimmi…
+## $ trophic.guild              &lt;chr&gt; &quot;carnivore&quot;, &quot;carnivore&quot;, &quot;carnivore&quot;, &quot;car…
+## $ dimension                  &lt;dbl&gt; 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3…
+## $ preymass                   &lt;dbl&gt; NA, NA, NA, NA, NA, NA, 1.39, NA, NA, NA, N…
+## $ log10.preymass             &lt;dbl&gt; NA, NA, NA, NA, NA, NA, 0.1430148, NA, NA, …
+## $ PPMR                       &lt;dbl&gt; NA, NA, NA, NA, NA, NA, 530, NA, NA, NA, NA…
+## $ prey.size.reference        &lt;chr&gt; NA, NA, NA, NA, NA, NA, &quot;Brose U, et al. 20…</code></pre>
+<pre class="r"><code>owls &lt;- filter(homerange, order == &quot;strigiformes&quot;)
+owls</code></pre>
+<pre><code>## # A tibble: 9 × 24
+##   taxon common.name        class order  family genus species primarymethod N    
+##   &lt;fct&gt; &lt;chr&gt;              &lt;chr&gt; &lt;fct&gt;  &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;
+## 1 birds boreal owl         aves  strig… strig… aego… funere… telemetry*    &lt;NA&gt; 
+## 2 birds long-eared owl     aves  strig… strig… asio  otus    telemetry*    &lt;NA&gt; 
+## 3 birds little owl         aves  strig… strig… athe… noctua  telemetry*    &lt;NA&gt; 
+## 4 birds Eurasian eagle-owl aves  strig… strig… bubo  bubo    telemetry*    &lt;NA&gt; 
+## 5 birds great horned owl   aves  strig… strig… bubo  virgin… direct obser… &lt;NA&gt; 
+## 6 birds Eurasian pygmy owl aves  strig… strig… glau… passer… telemetry*    &lt;NA&gt; 
+## 7 birds snowy owl          aves  strig… strig… nyct… scandi… direct obser… &lt;NA&gt; 
+## 8 birds tawny owl          aves  strig… strig… strix aluco   direct obser… 55   
+## 9 birds barn owl           aves  strig… tyton… tyto  alba    telemetry*    &lt;NA&gt; 
+## # ℹ 15 more variables: mean.mass.g &lt;dbl&gt;, log10.mass &lt;dbl&gt;,
+## #   alternative.mass.reference &lt;chr&gt;, mean.hra.m2 &lt;dbl&gt;, log10.hra &lt;dbl&gt;,
+## #   hra.reference &lt;chr&gt;, realm &lt;chr&gt;, thermoregulation &lt;chr&gt;, locomotion &lt;chr&gt;,
+## #   trophic.guild &lt;chr&gt;, dimension &lt;dbl&gt;, preymass &lt;dbl&gt;, log10.preymass &lt;dbl&gt;,
+## #   PPMR &lt;dbl&gt;, prey.size.reference &lt;chr&gt;</code></pre>
+<p>Smallest owl Mean mass of 61.32 grams, is the Eurasian pygmy owl</p>
+<pre class="r"><code>min(owls$mean.mass.g) </code></pre>
+<pre><code>## [1] 61.32</code></pre>
+<pre class="r"><code>filter(owls, mean.mass.g == 61.32)</code></pre>
+<pre><code>## # A tibble: 1 × 24
+##   taxon common.name        class order  family genus species primarymethod N    
+##   &lt;fct&gt; &lt;chr&gt;              &lt;chr&gt; &lt;fct&gt;  &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;
+## 1 birds Eurasian pygmy owl aves  strig… strig… glau… passer… telemetry*    &lt;NA&gt; 
+## # ℹ 15 more variables: mean.mass.g &lt;dbl&gt;, log10.mass &lt;dbl&gt;,
+## #   alternative.mass.reference &lt;chr&gt;, mean.hra.m2 &lt;dbl&gt;, log10.hra &lt;dbl&gt;,
+## #   hra.reference &lt;chr&gt;, realm &lt;chr&gt;, thermoregulation &lt;chr&gt;, locomotion &lt;chr&gt;,
+## #   trophic.guild &lt;chr&gt;, dimension &lt;dbl&gt;, preymass &lt;dbl&gt;, log10.preymass &lt;dbl&gt;,
+## #   PPMR &lt;dbl&gt;, prey.size.reference &lt;chr&gt;</code></pre>
+<p>Try filtering <strong>10. As measured by the data, which bird species
+has the largest homerange? Show all of your work, please. Look this
+species up online and tell me about it!</strong>.</p>
+<p>Largest homerange is in the long-eared owl. They are found throughout
+Europe, Asia, and North America and are partially migrational birds.
+They have tufts of feathers that stick out that look like ears (very
+cool).</p>
+<pre class="r"><code>max(owls$mean.hra.m2)</code></pre>
+<pre><code>## [1] 19620000</code></pre>
+<pre class="r"><code>filter(owls, mean.hra.m2 == 19620000)</code></pre>
+<pre><code>## # A tibble: 1 × 24
+##   taxon common.name    class order      family genus species primarymethod N    
+##   &lt;fct&gt; &lt;chr&gt;          &lt;chr&gt; &lt;fct&gt;      &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;
+## 1 birds long-eared owl aves  strigifor… strig… asio  otus    telemetry*    &lt;NA&gt; 
+## # ℹ 15 more variables: mean.mass.g &lt;dbl&gt;, log10.mass &lt;dbl&gt;,
+## #   alternative.mass.reference &lt;chr&gt;, mean.hra.m2 &lt;dbl&gt;, log10.hra &lt;dbl&gt;,
+## #   hra.reference &lt;chr&gt;, realm &lt;chr&gt;, thermoregulation &lt;chr&gt;, locomotion &lt;chr&gt;,
+## #   trophic.guild &lt;chr&gt;, dimension &lt;dbl&gt;, preymass &lt;dbl&gt;, log10.preymass &lt;dbl&gt;,
+## #   PPMR &lt;dbl&gt;, prey.size.reference &lt;chr&gt;</code></pre>
 </div>
 <div id="push-your-final-code-to-github" class="section level2">
 <h2>Push your final code to GitHub!</h2>

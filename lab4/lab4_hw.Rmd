@@ -144,8 +144,11 @@ filter(owls, mean.mass.g == 61.32)
  
  Try filtering
 **10. As measured by the data, which bird species has the largest homerange? Show all of your work, please. Look this species up online and tell me about it!**.  
-```{r}
 
+Largest homerange is in the long-eared owl. They are found throughout Europe, Asia, and North America and are partially migrational birds. They have tufts of feathers that stick out that look like ears (very cool).
+```{r}
+max(owls$mean.hra.m2)
+filter(owls, mean.hra.m2 == 19620000)
 ```
 
 ## Push your final code to GitHub!
