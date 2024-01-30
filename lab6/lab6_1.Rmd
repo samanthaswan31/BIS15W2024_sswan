@@ -33,7 +33,7 @@ Recall that we use pipes to connect the output of code to a subsequent function.
 ```{r}
 fish <- readr::read_csv("data/Gaeta_etal_CLC_data.csv")
 ```
-
+Clean_names is attached via a pipe, increases efficiency (via janitor package)
 ```{r}
 mammals <- read_csv("data/mammal_lifehistories_v2.csv") %>% clean_names()
 ```
@@ -48,8 +48,12 @@ fish %>%
 
 ## Practice
 1. Use `mutate()` to make a new column that is the half length of each fish: length_half = length/2. Select only fish_id, length, and length_half.
-```{r}
 
+New variable always added to the end of the data frame
+```{r}
+fish %>% 
+  mutate(length_half = length/2) %>% 
+  select(fish_id, length, length_half)
 ```
 
 ## `mutate_all()`
@@ -81,6 +85,7 @@ mammals %>%
   arrange(newborn)
 ```
 
+ifelse allows the replacement of the -999.00 values with NA
 ```{r}
 mammals %>% 
   select(genus, species, newborn) %>%
@@ -91,7 +96,10 @@ mammals %>%
 ## Practice
 1. We are interested in the family, genus, species and max life variables. Because the max life span for several mammals is unknown, the authors have use -999 in place of NA. Replace all of these values with NA in a new column titled `max_life_new`. Finally, sort the date in descending order by max_life_new. Which mammal has the oldest known life span?
 ```{r}
-
+mammals %>% 
+  select(genus, species, max_life) %>%
+  mutate(max_life_new = ifelse(max_life == -999.00, NA, max_life))%>% 
+  arrange(max_life)
 ```
 
 ## That's it! Let's take a break and then move on to part 2! 
