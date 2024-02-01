@@ -31,21 +31,46 @@ glimpse(penguins)
 
 As biologists, a good question that we may ask is how do the measured variables differ by island (on average)?
 ```{r}
-
-```
-
-```{r}
-
+penguins %>%
+  group_by(island) %>%
+  summarize(mean_bill_length_mm = mean(bill_length_mm),
+            mean_bill_depth_mm = mean(bill_depth_mm),
+            mean_flipper_length_mm = mean(flipper_length_mm),
+            mean_body_mass_g = mean(body_mass_g),
+            mean_year = mean(year))
 ```
 
 Why do we have NA here? Do all of these penguins lack data?
 ```{r}
-
+levels(penguins$island)
 ```
 
-Well, that won't work so let's remove the NAs and recalculate.
 ```{r}
+penguins %>%
+  group_by(island) %>%
+  summarize(number_NAs = sum(is.na(body_mass_g)))
+```
 
+
+Well, that won't work so let's remove the NAs and recalculate.
+
+Class strategy: pull out everything with a number, leave all NAs behind
+```{r}
+penguins %>%
+  filter(!is.na(body_mass_g)) %>%
+  group_by(island) %>%
+  summarize(mean_body_mass = mean(body_mass_g), n = n())
+```
+
+
+```{r}
+penguins %>%
+  group_by(island) %>%
+  summarize(mean_bill_length_mm = mean(bill_length_mm, na.rm=T),
+            mean_bill_depth_mm = mean(bill_depth_mm, na.rm=T),
+            mean_flipper_length_mm = mean(flipper_length_mm, na.rm=T),
+            mean_body_mass_g = mean(body_mass_g, na.rm=T),
+            mean_year = mean(year, na.rm=T))
 ```
 
 What if we are interested in the number of observations (penguins) by species and island?
@@ -79,18 +104,30 @@ penguins %>%
 
 For counts, I also like `tabyl()`. Lots of options are supported in [tabyl](https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html)
 ```{r}
-
+penguins %>%
+  tabyl(island, species)
 ```
 
 ## Practice
 1. How does the mean of `bill_length_mm` compare between penguin species?
 ```{r}
-
+penguins %>%
+  group_by(species) %>%
+  summarize(mean_bill_length_mm = mean(bill_length_mm, na.rm = TRUE))
 ```
 
 2. For some penguins, their sex is listed as NA. Where do these penguins occur?
-```{r}
 
+```{r}
+penguins %>%
+  count(sex, island)
+```
+
+
+No data taken for these rows
+```{r}
+penguins %>%
+  group_by(sex)
 ```
 
 ## `across()`
@@ -118,7 +155,7 @@ penguins %>%
 
 ```{r}
 penguins %>%
-  summarize(across(contains("mm"), \(x) mean(x, na.rm = TRUE)))
+  summarize(across(contains("mm"), \(x) mean(x, na.rm = TRUE))) #use the slash x to correct the error
 ```
 
 `group_by` also works.
