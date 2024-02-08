@@ -50,11 +50,16 @@ Problem 3. (3 points) Which parks/ reserves are represented in the data? Don't j
 tabyl(wolves$park)
 ```
 
+```{r}
+names(wolves)
+```
+
+
 Problem 4. (4 points) Which park has the largest number of wolf packs?
 ```{r}
 wolves %>%
-  summarize(max_wolf_pack = max(packsize_aug, na.rm = T))
-filter(wolves, packsize_aug == 37)
+  select(park, pack, packsize_aug) %>% 
+  arrange(desc(packsize_aug))
 ```
 
 Problem 5. (4 points) Which park has the highest total number of human-caused mortalities `mort_all`?
@@ -85,7 +90,7 @@ Problem 8. (4 points) Pack dynamics can be hard to predict- even for strong pack
 ```{r}
 ynp %>%
   filter(pack == "druid") %>%
-  summarize(max_pack_size = max(packsize_aug))
+  summarize(max_pack_size = mean(packsize_aug))
 filter(ynp, packsize_aug == 37)
 ```
 
