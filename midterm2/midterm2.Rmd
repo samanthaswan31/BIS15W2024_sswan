@@ -3,7 +3,8 @@ title: "Midterm 2 W24"
 author: "Samantha Swan"
 date: "`r Sys.Date()`"
 output:
-  html_document: default
+  html_document: 
+    keep_md: yes
   pdf_document: default
 ---
 
