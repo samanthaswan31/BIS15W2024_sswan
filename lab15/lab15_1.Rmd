@@ -29,12 +29,81 @@ Go to Tools -> Global Options -> Copilot -> Enable Git
 ## Exploration Questions:
 Lets get some get a feel for what copilot (or ChatGPT) does, use Github Copilot to autocomplete the questions below. You can alternatively paste the questions in ChatGPT or Microsoft Copilot.
 1. What is AI?
+"AI, or Artificial Intelligence, refers to the development of computer systems that can perform tasks that typically require human intelligence. These tasks include learning, reasoning, problem-solving, perception, understanding natural language, and even speech recognition. AI systems aim to replicate or simulate human intelligence, enabling machines to analyze data, adapt to new information, and perform tasks in a way that traditionally required human intervention.
+
+There are two main types of AI:
+
+Narrow or Weak AI: This type of AI is designed and trained for a specific task. It excels in performing that particular task but lacks the broad cognitive abilities associated with human intelligence. Examples include virtual personal assistants like Siri or Alexa, image recognition software, and recommendation algorithms.
+
+General or Strong AI: This is a more advanced form of AI that possesses the ability to understand, learn, and apply knowledge across various domains, similar to human intelligence. General AI remains a theoretical concept and has not been fully realized yet.
+
+AI systems can be further categorized into:
+
+Machine Learning (ML): A subset of AI that focuses on the development of algorithms allowing computers to learn from data and improve their performance over time without explicit programming.
+
+Deep Learning: A specific type of machine learning inspired by the structure and function of the human brain. Deep learning involves artificial neural networks that can automatically learn and make decisions without human intervention.
+
+AI has applications in various fields, including healthcare, finance, education, robotics, and more. As technology advances, the capabilities of AI continue to expand, raising ethical and societal considerations along with the potential for transformative impact across industries."
 
 2. What is ChatGPT?
+"
+ChatGPT is a language model developed by OpenAI based on the GPT (Generative Pre-trained Transformer) architecture. It is designed to understand and generate human-like text based on the input it receives. ChatGPT is part of the GPT-3.5 series, which is an advanced version of the model.
+
+The "Chat" in ChatGPT reflects its primary use case, which is generating text in a conversational manner. It is capable of understanding context, responding to prompts, and providing coherent and contextually relevant text. ChatGPT has been trained on diverse datasets from the internet, allowing it to have a broad understanding of various topics and respond to a wide range of user queries.
+
+Users can interact with ChatGPT through an API (Application Programming Interface) provided by OpenAI or through interfaces created by OpenAI itself. It has been used in applications such as chatbots, content generation, code generation, and more. However, it's important to note that ChatGPT may not always produce accurate or contextually appropriate responses, and its responses are generated based on patterns learned during training.
+
+As of my last knowledge update in January 2022, there may have been updates or newer versions of ChatGPT. If you're looking for the latest information, I recommend checking OpenAI's official sources or documentation for the most recent developments."
 
 3. What is Github Copilot?
+"
+As of my last knowledge update in January 2022, GitHub Copilot is an AI-powered code completion tool developed by GitHub in collaboration with OpenAI. GitHub Copilot is built on the Codex model, which is based on OpenAI's GPT (Generative Pre-trained Transformer) architecture. It's designed to assist developers by suggesting whole lines or blocks of code as they write, aiming to increase productivity and streamline the coding process.
 
-4. [Try it yourself: Insert your own question here]
+Key features of GitHub Copilot include:
+
+Code Autocompletion: Copilot provides real-time code suggestions as developers type, offering whole lines or blocks of code based on the context of the code being written.
+
+Multiple Language Support: GitHub Copilot supports a variety of programming languages, making it versatile for developers working on projects in different languages.
+
+Context Awareness: The tool aims to understand the context of the code being written and generate suggestions that align with the intended functionality.
+
+Customization: Developers can modify and accept or reject the suggestions provided by Copilot, allowing for flexibility in the coding process.
+
+GitHub Copilot is integrated as an extension for Visual Studio Code, a popular source-code editor. It has gained attention for its potential to boost coding efficiency and reduce the time developers spend on repetitive or boilerplate code.
+
+Keep in mind that developments in technology may have occurred since my last update in January 2022, so it's advisable to check the official GitHub and OpenAI sources for the latest information on GitHub Copilot."
+
+4. [Try it yourself: Insert your own question here] What is the most effective/efficient way to use GitHub Coplit?
+"
+Using GitHub Copilot effectively involves integrating it into your coding workflow and making the most of its capabilities. Here are some tips for efficiently using GitHub Copilot:
+
+Understand Its Suggestions:
+
+GitHub Copilot suggests code based on the context of your current code. Take the time to understand the suggestions to ensure they align with your intentions.
+Review the suggestions carefully to avoid blindly accepting code that might not be suitable for your specific use case.
+Provide Clear Comments:
+
+Add clear and concise comments in your code to guide Copilot in generating more accurate suggestions. Well-commented code helps the model understand your intentions better.
+Iterate and Refine:
+
+Copilot might not always provide perfect code on the first try. Be prepared to iterate, refine, and modify the suggestions to fit your requirements.
+Use Copilot as a starting point and then tailor the generated code to meet your specific needs.
+Combine Manual Coding with Copilot:
+
+While Copilot can generate code efficiently, it's beneficial to combine it with your manual coding skills. This helps in maintaining code quality and ensures that you have a full understanding of the code you are writing.
+Be Mindful of Security:
+
+As with any code completion tool, be cautious about security implications. Avoid using Copilot for generating sensitive or critical parts of your code without thorough review and testing.
+Stay Updated:
+
+GitHub Copilot may receive updates and improvements over time. Keep your tools, including Copilot and your code editor, up-to-date to benefit from the latest enhancements and bug fixes.
+Use Supported Languages:
+
+While Copilot supports a variety of programming languages, its effectiveness may vary. For the best results, use it with languages and frameworks that are well-supported.
+Explore Documentation and Examples:
+
+Familiarize yourself with the documentation and examples provided by GitHub and OpenAI. This can help you understand the tool's capabilities and make the most of its features.
+Remember that GitHub Copilot is a tool to assist developers, and it works best when used in conjunction with human expertise. Regularly review and test the generated code to ensure it meets your project's requirements and standards."
 
 ## Load the libraries  
 ```{r message=FALSE, warning=FALSE}
@@ -48,7 +117,7 @@ library(shinydashboard)
 ## Load the Data: 
 ```{r}
 #load the Netflix Data in your Data folder, save it under the object name netflix
-
+netflix <- read.csv("data/netflix_titles.csv")
 
 ```
 
@@ -58,7 +127,7 @@ library(shinydashboard)
 ## Lets Practice:
 Explore the elements in your data: include a comment within your code chunk to prompt Copilot to use the function of your choice
 ```{r}
-
+glimpse(netflix)
 
 ```
 *Did copilot use your preferred method to get the summary of the data? If not, how could you improve the prompt to get the desired output?*
@@ -66,27 +135,29 @@ Explore the elements in your data: include a comment within your code chunk to p
 
 Sort out the movies from the netflix into an new object called netflix_movies
 ```{r} 
-
+netflix_movies <- filter(netflix, type == "Movie")
 ```
 
 
 Which director has the most movies on netflix?
 ```{r}
-
-
+count(netflix_movies, director, sort = TRUE) %>% filter(!is.na(director))
 ```
 *Do you see anything wrong with the table above, look at row 1. Write a prompt below to fix this.*
 
-[insert your prompt here]
-```{r}
+Using R how do you separate two words in the same observation without creating a new dataframe?
 
+Seperate each director into their own row
+```{r}
+netflix_movies <- separate_rows(netflix_movies, director, sep = ",")
+netflix_movies
 ```
 
 
 
 Which director had the most movies by release year and remove the NA's?
 ```{r}
-
+count(netflix_movies, director, release_year, sort = TRUE) %>% filter(!is.na(director))
 
 ```
 *See anything else interesting about this table, look at the first director on the table. Could this be a problem and how can we edit the dataset to fix this? Try writing a prompt.*
@@ -123,6 +194,45 @@ Make a bar plot of the top directors with the most movies on netflix
 
 *Take a few minutes to make your own plot(s) using prompts, edit prompts until you get a plot that you like.*
 
+```{r}
+# Read the data
+data <- read.csv("data.csv")
+
+# Define UI
+ui <- fluidPage(
+  titlePanel("Interactive Shiny App"),
+  
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("group", "Select Group:", choices = unique(data$Group)),
+      width = 3
+    ),
+    
+    mainPanel(
+      plotOutput("barPlot")
+    )
+  )
+)
+
+# Define server
+server <- function(input, output) {
+  output$barPlot <- renderPlot({
+    # Filter data based on selected group
+    filtered_data <- data %>%
+      filter(Group == input$group)
+    
+    # Create a bar plot
+    ggplot(filtered_data, aes(x = Value)) +
+      geom_bar() +
+      labs(title = paste("Bar Plot for Group", input$group),
+           x = "Numeric Variable",
+           y = "Count")
+  })
+}
+
+# Run the app
+shinyApp(ui, server)
+```
 
 
 
