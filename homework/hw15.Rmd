@@ -1,8 +1,10 @@
 ---
 title: "BIS15L_AI_hmwk"
-author: "Your Name"
+author: "Samantha Swan"
 date: "`r Sys.Date()`"
-output: html_document
+output: 
+  html_document: 
+    keep_md: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -24,65 +26,65 @@ library(dplyr)
 ```
 
 
-1.
+1. Reads in the data
 ```{r}
-blood_count <- read_csv("data/blood_count.csv")
+blood_count <- read_csv("data/blood_count_dataset.csv")
 ```
 
-2. 
+2. Gives an idea of what the dataset 'blood_count' looks like, has a typo
 ```{r}
-glmpse(blood_count)
+glimpse(blood_count)
 
 ```
 
-3. 
+3. Provides min, mean, and max for 'blood_count', typo in second mean and missing a paranthesis/comma and variable must be red blood cells
 ```{r}
 blood_count %>% 
-  group_by(gender) %>% 
-  summarize(min=min(red_blood_cells)
-            mean=maen(red_blood_cells),
-            max=max(red_blood_cells)
+  group_by(Red_Blood_Cells) %>% 
+  summarize(min=min(Red_Blood_Cells),
+            mean=mean(Red_Blood_Cells),
+            max=max(Red_Blood_Cells))
 ```
 
 
-4. 
+4. Mean values for columns 3-9 for males
 ```{r}
 options(scipen = 999, digits = 2)
 
 blood_count %>% 
-  filter(Gender = "male") %>%
-  select[3:9] %>%
-  colMeans(na.rm = TRUE)
+  filter(Gender == "male") %>% #filters for males
+  select(3:9) %>% #selects column 3-9
+  colMeans(na.rm = TRUE) #gives the column means
 
 ```
 
-5. 
+5. Finds the mean values for females of columns 3-9
 ```{r}
-bloood_count %>% 
-  filter(Gender = "Female") />%
-  select[3:9] %>%
-  colMeans(na.rm = T)
+blood_count %>% 
+  filter(Gender == "Female") %>% #filters for females
+  select(3:9) %>% #selects for columns 3-9
+  summarise_all(mean, na.rm = T) #calculates the mean
 ```
 
 
-6. 
+6. Create boxplots showing blood count values across different tests, each boxplot representing a different test, boxplots grouiped by gender, each test = own facet
 ```{r}
 
 blood_count %>%
-  pivot_wider(cols = [3:9], names_to = "Test", values_to = "Values") %>%
-  ggplot(aes(x = Gender, y = Values, fill = Gender)) +
-  geom_boxplot() +
-  facet(~ Test, scales = "free") 
+  pivot_longer(cols = 3:9, names_to = "Test", values_to = "Values") %>% #changed to pivot_longer
+  ggplot(aes(x = Gender, y = Values, fill = Gender))+
+  geom_boxplot()+
+  facet_wrap(~ Test, scales = "free")+ 
   labs(title = "Boxplot of Blood Count Tests",
        x = "Test",
        y = "Values")
 
 ```
 
-7. 
+7. Create new column Age_Group sorted into ten year intervals
 ```{r}
 grouped_bc <- blood_count %>%
-  change(Age_Group = case_when(
+  mutate(Age_Group = case_when( #replaced with mutate
     Age >= 20 & Age <= 29 ~ "20s",
     Age >= 30 & Age <= 39 ~ "30s",
     Age >= 40 & Age <= 49 ~ "40s",
@@ -93,22 +95,25 @@ head(grouped_bc)
 
 ```
 
-8. 
+8. Creates a boxplot of blood count tests by age group
 ```{r}
-blood_count %>%
+grouped_bc %>%
   pivot_longer(cols = 3:9, names_to = "Test", values_to = "Values") %>%
-  ggplot(ase(x = Age_Group, y = values, fill = Age_Group)) +
+  ggplot(aes(x = Age_Group, y = Values, fill = Age_Group)) + #typo
   geom_boxplot() +
-  facet_wrap( Test, scales = "free") +  # Facet by the "Test" variable
+  facet_wrap(~Test, scales = "free") +  # Facet by the "Test" variable
   labs(title = "Boxplot of Blood Count Tests by Age Group",
        x = "Age Group",
        y = "Values")
 
 ```
 9. What are two drawbacks and two benefits of AI?
+Two drawbacks- once it gets stuck on something being an error or a strategy to fix an error it can be hard to get it to redirect, I got it stuck on question 8 and it was unable to answer or move on
+
+Two benefits- it finds oversight mistakes like typos or missing paranthesis very fast, it can be a very good way to get started troubleshooting
 
 10. Do you think you will use AI for coding in the future? Why or why not?
-
+Yes! It was a great way to at least get started on a problem and fixed some of the error instantly.
 
 ## Push your final code to GitHub!
 Please be sure that you check the `keep md` file in the knit preferences. 
